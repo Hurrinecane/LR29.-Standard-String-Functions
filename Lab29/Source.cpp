@@ -13,7 +13,9 @@ int main()
 	char *s = (char*)malloc(length * sizeof(char));
 	gets_s(s, length);
 	int len = strlen(s);
-	char *parenthesis1 = strchr(s, '(');	char *parenthesis2 = strchr(s, ')');	if (parenthesis1 && parenthesis2 && parenthesis1 < parenthesis2) //mozno li?
+	char *parenthesis1 = strchr(s, '(');
+	char *parenthesis2 = strchr(s, ')');
+	if (parenthesis1 && parenthesis2 && parenthesis1 < parenthesis2) //mozno li?
 	{
 		char *s1 = (char*)malloc(length * sizeof(char));
 		int n;
