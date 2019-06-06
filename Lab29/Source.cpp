@@ -6,13 +6,13 @@
 #include<iostream>
 #include <conio.h>
 
-int length = 256;
+const int length = 256;
 char *s = (char*)malloc(length * sizeof(char));
 char *parenthesis1 = NULL;
 char *parenthesis2 = NULL;
 
-void nine()
-{	
+void first()
+{
 	do
 	{
 		parenthesis1 = strchr(s, '(');
@@ -40,26 +40,17 @@ void nine()
 			strncat_s(s1, length, s, n);
 			strcat_s(s1, length, parenthesis2 + 1);
 			strcpy_s(s, length, s1);
+			free(s1);
 		}
 
 		puts(s);
 
 	} while (true);
-
-
 	_getch();
 }
 
-int main()
+void second()
 {
-	setlocale(LC_ALL, "");
-
-	gets_s(s, length);
-
-	nine();
-
-#pragma region 2
-
 	int quantity = 0, max = 0;
 	int len = strlen(s);
 
@@ -84,8 +75,58 @@ int main()
 
 	printf_s("Max quantity: %d\n", max);
 	_getch();
+}
 
-#pragma endregion
+void third()
+{
+	char *s1 = (char*)calloc(length, sizeof(char));
+	char *slash1 = NULL, *slash2 = NULL;
 
+	do
+	{
+		slash1 = strchr(s, '\\');
+
+		while (slash1 != NULL && slash1[1] != '*')
+		{
+			if (slash1[1] != '*')
+				slash1 = strchr(&slash1[1], '\\');
+		}
+		if (slash1 == NULL) break;
+
+		slash2 = strchr(&slash1[1], '\\');
+		if (slash2 == NULL || slash2[-1] != '*' || &slash2[-1] == &slash1[1]) break;
+
+		int len = strlen(s), n = 0;
+
+		for (int i = 0; i < len; i++)
+		{
+			if (&s[i] == slash1)
+			{
+				n = i;
+				break;
+			}
+		}
+
+		if (n)	strncat_s(s1, len, s, n);
+		strcat_s(s1, length, slash2 + 1);
+		strcpy_s(s, length, s1);
+		free(s1);
+		puts(s);
+	} while (slash1 != NULL && slash2 != NULL);
+
+	_getch();
+}
+
+int main()
+{
+	setlocale(LC_ALL, "");
+
+	gets_s(s, length);
+
+	third();
+
+	first();
+
+	second();
 
 }
