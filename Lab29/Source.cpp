@@ -12,23 +12,39 @@ int main()
 	int length = 256;
 	char *s = (char*)malloc(length * sizeof(char));
 	gets_s(s, length);
-	int len = strlen(s);
-	char *parenthesis1 = strchr(s, '(');	char *parenthesis2 = strchr(s, ')');	if (parenthesis1 && parenthesis2 && parenthesis1 < parenthesis2) //mozno li?
+	char *parenthesis1 = 0;
+	char *parenthesis2 = 0;
+#pragma region 1
+
+
+	do
 	{
-		char *s1 = (char*)malloc(length * sizeof(char));
-		int n;
-		for (int i = 0; i < len; i++)
-		{		
-			if (s[i] == ')')
+
+		int len = strlen(s);
+		parenthesis1 = strchr(s, '(');
+		parenthesis2 = strchr(s, ')');
+		if (parenthesis1 && parenthesis2 && parenthesis1 < parenthesis2) //mozno li?
+		{
+			char *s1 = (char*)calloc(length, sizeof(char));
+			int n;
+			for (int i = 0; i < len; i++)
 			{
-				n = i;
-				break;
+				if (s[i] == '(')
+				{
+					n = i;
+					break;
+				}
 			}
+			strncat_s(s1, length, s, n);
+			len = strlen(s1);
+			strcat_s(s1, length, parenthesis2 + 1);
+			strcpy_s(s, length, s1);
 		}
-		strncat_s(s1,sizeof(s1) , s, n);
-		strcat_s(s1, sizeof(s1), parenthesis2);
-		puts(s1);
-	}
+	} while (parenthesis1 != 0 && parenthesis2 != 0);
+	puts(s);
+	system("pause");
+
+#pragma endregion
 
 
 }
