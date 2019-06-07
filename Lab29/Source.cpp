@@ -82,22 +82,59 @@ void third()
 	char *s1 = (char*)calloc(length, sizeof(char));
 	char *slash1 = NULL, *slash2 = NULL;
 
+	//do
+	//{
+	//	slash1 = strchr(s, '\\');
+	//
+	//	while (slash1 != NULL && slash1[1] != '*')
+	//	{
+	//		if (slash1[1] != '*')
+	//			slash1 = strchr(&slash1[1], '\\');
+	//	}
+	//	if (slash1 == NULL) break;
+	//
+	//	slash2 = strchr(&slash1[1], '\\');
+	//	if (slash2 == NULL || slash2[-1] != '*' || &slash2[-1] == &slash1[1]) break;
+	//
+	//	int len = strlen(s), n = 0;
+	//
+	//	for (int i = 0; i < len; i++)
+	//	{
+	//		if (&s[i] == slash1)
+	//		{
+	//			n = i;
+	//			break;
+	//		}
+	//	}
+	//
+	//	if (n)	strncat_s(s1, len, s, n);
+	//	strcat_s(s1, length, slash2 + 1);
+	//	strcpy_s(s, length, s1);
+	//	free(s1);
+	//	puts(s);
+	//} while (slash1 != NULL && slash2 != NULL);
+
 	do
 	{
 		slash1 = strchr(s, '\\');
-
 		while (slash1 != NULL && slash1[1] != '*')
 		{
 			if (slash1[1] != '*')
 				slash1 = strchr(&slash1[1], '\\');
 		}
-		if (slash1 == NULL) break;
+		if (slash1==NULL)
+			break;
 
 		slash2 = strchr(&slash1[1], '\\');
-		if (slash2 == NULL || slash2[-1] != '*' || &slash2[-1] == &slash1[1]) break;
+		while (slash2 != NULL && slash2[-1] != '*')
+		{
+			if (slash2[-1] != '*')
+				slash2 = strchr(&slash2[1], '\\');
+		}
+		if (slash2==NULL)
+			break;
 
 		int len = strlen(s), n = 0;
-
 		for (int i = 0; i < len; i++)
 		{
 			if (&s[i] == slash1)
@@ -106,13 +143,14 @@ void third()
 				break;
 			}
 		}
-
 		if (n)	strncat_s(s1, len, s, n);
 		strcat_s(s1, length, slash2 + 1);
 		strcpy_s(s, length, s1);
 		free(s1);
 		puts(s);
+
 	} while (slash1 != NULL && slash2 != NULL);
+
 
 	_getch();
 }
